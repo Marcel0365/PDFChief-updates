@@ -1,9 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
-  <channel>
-    <title>PDFChief Updates</title>
-    <link>https://github.com/Marcel0365/PDFChief-updates/releases</link>
-    <description>Signierte Updates für PDFChief.</description>
-    <language>de</language>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
+--><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>PDFChief Updates</title>
+        <link>https://github.com/Marcel0365/PDFChief-updates/releases</link>
+        <description>Signierte Updates für PDFChief.</description>
+        <language>de</language>
+        <item>
+            <title>0.2.0</title>
+            <pubDate>Fri, 13 Nov 2026 18:06:35 +0000</pubDate>
+            <link>https://github.com/Marcel0365/PDFChief-updates/releases</link>
+            <sparkle:version>0.2.0</sparkle:version>
+            <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/Marcel0365/PDFChief-updates/releases/download/v0.2.0/PDFChief-v0.2.0.zip" length="4047687" type="application/octet-stream" sparkle:edSignature="aYy/i11k5y2pOt/rqFFH0jkqdyemnoXS6OZeevWogcOmX1j0EHPeEGso/lbCdqGRZ56bYGy4FgeKO4Kji1vuDg=="></enclosure>
+        </item>
+    </channel>
+</rss><!-- sparkle-signatures:
+edSignature: i4G3LYWKWx9HASFQJxqvj/ckY5FmIN0px8JbPT/UlfXZLP2YC5hynKd7aZQvumkRMkMy4GDhsi5NSVHKR5emDA==
+length: 1339
+-->
