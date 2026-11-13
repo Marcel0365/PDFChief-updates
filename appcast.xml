@@ -7,17 +7,17 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
         <description>Signierte Updates für PDFChief.</description>
         <language>de</language>
         <item>
-            <title>0.2.4</title>
-            <pubDate>Fri, 13 Nov 2026 19:10:28 +0000</pubDate>
+            <title>0.2.5</title>
+            <pubDate>Fri, 13 Nov 2026 19:48:50 +0000</pubDate>
             <link>https://github.com/Marcel0365/PDFChief-updates/releases</link>
-            <sparkle:version>0.2.4</sparkle:version>
-            <sparkle:shortVersionString>0.2.4</sparkle:shortVersionString>
+            <sparkle:version>0.2.5</sparkle:version>
+            <sparkle:shortVersionString>0.2.5</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
-            <enclosure url="https://github.com/Marcel0365/PDFChief-updates/releases/download/v0.2.4/PDFChief-v0.2.4.zip" length="3365753" type="application/octet-stream" sparkle:edSignature="9aI4wuSxBdIgvldnIqH7xKUPXI2qNfaHB+jzis7wXdTIjlVB3FcsevM9R1oCvNE6IlnbEUOEi6sATKIsx0GbAg=="></enclosure>
+            <enclosure url="https://github.com/Marcel0365/PDFChief-updates/releases/download/v0.2.5/PDFChief-v0.2.5.zip" length="3402814" type="application/octet-stream" sparkle:edSignature="iTdWQEwXcpns0Od2Pddq97XOQnwnbdF3E2f4ot64+boNQPMqokxLpQlZ1w4GTpBPeIMWZGCRX50FGsXdcpDIDA=="></enclosure>
         </item>
     </channel>
 </rss><!-- sparkle-signatures:
-edSignature: E1fu2EYu6FY1qEsZqZrjpsFcO0U/kVj4zsfKUrksi0wBhLHCGOg25HrkMjDAWUC/MgN4WmXNpfxuJzdXiGmLAQ==
+edSignature: MbYWtPP6N76kinLH665t+OZ6d+YyNVaEbgvM/W/pO9JaIXPXDVn1rhRDNrahhUgz7LAKVPRVHdrVCgpyPMXABQ==
 length: 1418
 -->
