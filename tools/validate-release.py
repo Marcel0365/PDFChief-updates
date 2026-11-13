@@ -10,6 +10,7 @@ import plistlib
 import posixpath
 import re
 import stat
+import struct
 import subprocess
 import sys
 import tempfile
@@ -117,7 +118,10 @@ def validate(incoming, branch, public_key_string, published_feed):
             require(enclosure.get(f"{{{SPARKLE}}}edSignature") == metadata["edSignature"]
                     and enclosure.get("length") == str(length), "Appcast and archive metadata disagree.")
             minimum = item.findtext("sparkle:minimumSystemVersion", namespaces=NAMESPACE)
-            require(minimum in {"26", "26.0", "26.0.0"}, "Unexpected minimum macOS version.")
+            require(minimum in {"14", "14.0", "14.0.0"}, "Unexpected minimum macOS version.")
+            hardware = item.findall("sparkle:hardwareRequirements", namespaces=NAMESPACE)
+            require(len(hardware) == 1 and hardware[0].text == "arm64",
+                    "The appcast must require arm64 hardware to exclude Intel Macs.")
     require(version in versions, "This release is missing from the appcast.")
 
     with zipfile.ZipFile(archive) as package:
@@ -137,8 +141,23 @@ def validate(incoming, branch, public_key_string, published_feed):
         require(info_entry.file_size <= 1_048_576, "Application Info.plist is too large.")
         info = plistlib.loads(package.read(info_entry))
         require(info.get("CFBundleIdentifier") == "com.marcelschmidt.pdfchief", "Unexpected bundle identifier.")
+        require(info.get("NSHumanReadableCopyright") == "© 2026 Marcel Schmidt",
+                "The archived app must credit Marcel Schmidt.")
+        credits_entry = package.getinfo("PDFChief.app/Contents/Resources/Credits.rtf")
+        require(credits_entry.file_size <= 65_536 and b"Marcel Schmidt" in package.read(credits_entry),
+                "The archived app must include its Marcel Schmidt author credit.")
         require(info.get("CFBundleVersion") == version and info.get("CFBundleShortVersionString") == version,
                 "Archived application versions do not match the release.")
+        require(info.get("LSMinimumSystemVersion") in {"14", "14.0", "14.0.0"},
+                "The archived app must support macOS Sonoma 14.")
+        require(info.get("CFBundleExecutable") == "PDFChief", "Unexpected application executable name.")
+        with package.open("PDFChief.app/Contents/MacOS/PDFChief") as executable:
+            header = executable.read(32)
+        require(len(header) == 32, "The application executable needs a Mach-O header.")
+        magic, cpu_type, cpu_subtype, file_type = struct.unpack("<IiiI", header[:16])
+        # A thin little-endian 64-bit ARM executable, rather than Intel or a fat binary.
+        require(magic == 0xFEEDFACF and cpu_type == 0x0100000C and cpu_subtype & 0x00FFFFFF == 0
+                and file_type == 2, "The application executable must contain only Apple Silicon arm64 code.")
         require(info.get("SUPublicEDKey") == public_key_string and info.get("SUFeedURL") == FEED_URL,
                 "Archived updater configuration does not match the channel.")
 

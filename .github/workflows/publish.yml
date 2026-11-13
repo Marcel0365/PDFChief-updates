@@ -51,7 +51,7 @@ jobs:
           else
             gh release create "$RELEASE_TAG" --target "$base_commit" --draft \
               --title "PDFChief $RELEASE_VERSION" \
-              --notes 'Universal macOS 26 app. Updates are verified with Sparkle Ed25519 signatures. This build is ad hoc signed and is not Apple notarized.'
+              --notes 'Apple Silicon app for macOS 14 Sonoma or later. Updates are verified with Sparkle Ed25519 signatures. This build is ad hoc signed and is not Apple notarized.'
             draft=true
           fi
           # A public tag must stay on the clean main history, never on a delivery.

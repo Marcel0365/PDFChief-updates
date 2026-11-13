@@ -2,6 +2,8 @@
 
 Öffentlicher Download- und Updatekanal für PDFChief. Der Quellcode bleibt im privaten Repository `Marcel0365/PDFChief`. Dieses Repository enthält nur den Appcast, den Veröffentlichungsworkflow und dessen Prüfung; fertige App-Bundles liegen unter [Releases](https://github.com/Marcel0365/PDFChief-updates/releases).
 
+Die App unterstützt ab Version 0.2.1 macOS 14 Sonoma und neuer auf Apple Silicon. Die Build-Runner verwenden weiterhin ein aktuelles macOS/Xcode; das Deploymentziel und die veröffentlichten Feeds bleiben bei macOS 14. Neue Appcasts verlangen ausdrücklich `arm64`, damit die zuvor veröffentlichte universelle Version 0.2.0 auf Intel-Macs kein inkompatibles Update angeboten bekommt.
+
 Der Appcast liegt unter `https://raw.githubusercontent.com/Marcel0365/PDFChief-updates/main/appcast.xml`. Das anfänglich leere XML wird mit der ersten Veröffentlichung durch einen signierten Feed ersetzt.
 
 ## Einmal einrichten
@@ -17,7 +19,9 @@ Private Schlüssel gehören weder in dieses Repository noch in die App, Release-
 
 Im privaten Repository `VERSION` auf eine stabile Version wie `0.2.0` setzen, die Änderung committen und den vorhandenen Commit mit `v0.2.0` taggen und pushen. Alternativ den privaten Workflow **Deliver a signed update** mit einem bereits vorhandenen Tag starten. Vorabversionen und Tags mit führenden Nullen werden nicht akzeptiert.
 
-Der private Workflow baut und prüft mit macOS 26/Xcode 26.6. `APP_VERSION` und `APP_BUILD_VERSION` entsprechen dem Tag ohne `v`. Er baut ein universelles Bundle für Apple Silicon und Intel, erstellt mit `ditto` ein ZIP mit erhaltenen Framework-Symlinks und signiert Archiv und Appcast mit Sparkle 2.10.1. Die Schlüssel werden den offiziellen Sparkle-Werkzeugen über stdin übergeben. `tools/check-update.swift` prüft die Auslieferung zusätzlich.
+Der private Workflow baut und prüft mit macOS 26/Xcode 26.6. `APP_VERSION` und `APP_BUILD_VERSION` entsprechen dem Tag ohne `v`. Er baut ein Bundle ausschließlich für Apple Silicon (`arm64`) mit Deploymentziel macOS 14, erstellt mit `ditto` ein ZIP mit erhaltenen Framework-Symlinks und signiert Archiv und Appcast mit Sparkle 2.10.1. Die Schlüssel werden den offiziellen Sparkle-Werkzeugen über stdin übergeben. `tools/check-update.swift` prüft die Auslieferung zusätzlich.
+
+Sparkles offizieller Generator erkennt die Architektur am Mach-O-Header und ergänzt `<sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>`. Das Paketskript prüft diese Anforderung vor dem abschließenden Signieren des Feeds. Der öffentliche Validator prüft sie erneut und akzeptiert nur ein dünnes ARM64-Executable; Intel- und Universal-Binaries werden abgelehnt. Beim Übernehmen eines Vorfeeds werden alte Einträge entfernt, da Sparkles Versionslimit sonst getrennte OS-/Architekturzweige erhalten kann. Historische ZIPs bleiben in GitHub Releases.
 
 Der einzige öffentliche Push enthält `.incoming/PDFChief-vX.Y.Z.zip`, `.incoming/appcast.xml` und `.incoming/release.json` auf einem temporären Branch `delivery/vX.Y.Z`. Dieser Branch basiert auf dem öffentlichen `main`; private Quellcodehistorie und private Tags werden nicht übertragen.
 
